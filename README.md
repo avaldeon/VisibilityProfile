@@ -35,6 +35,9 @@ Guía rápida sobre cómo utilizar el plugin.
 
 ¡Las contribuciones son bienvenidas! Si deseas contribuir, por favor sigue estos pasos...
 
+## Reportar Problemas
+Si encuentras algún problema, por favor [abre un nuevo issue](https://github.com/avaldeon/VisibilityProfile/issues).
+
 ## Licencia
 
 Este proyecto está licenciado bajo la [MIT License](LICENSE).
