@@ -1,0 +1,47 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=Visibility Profile
+qgisMinimumVersion=3.0
+description=This plugin make images with a graph drawing a profile between two points (the observer and the observed feature) and the visibility between these two points taking into account the height of both elements
+version=0.1
+author=Aitor Valdeón - Forestalia Renovables S.L.
+email=avaldeon@forestalia.com
+
+about=The plugin creates images that show the profile of the terrain between two points (the observer and the observed) taking into account the height of both elements. In addition, it adds the direct lines of sight between the elements, as well as the line of sight of the highest angle ground, so that the proportion of the visible element observed is displayed. Finally, the graph is filled in 3 colors to indicate within the line of sight, if the observed object is displaced, if at each point the element would be seen in its entirety (the ground is seen), if it is partially seen, or if it is not seen.
+
+tracker=https://github.com/avaldeon/VisibilityProfile/issues
+repository=https://github.com/avaldeon/VisibilityProfile
+# End of mandatory metadata
+
+# Recommended items:
+
+hasProcessingProvider=no
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=python, visibility, profile, qgis
+
+homepage=https://github.com/avaldeon/VisibilityProfile
+category=Plugins
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# Since QGIS 3.8, a comma separated list of plugins to be installed
+# (or upgraded) can be specified.
+# Check the documentation for more information.
+# plugin_dependencies=
+
+Category of the plugin: Raster, Vector, Database or Web
+# category=
+
+# If the plugin can run on QGIS Server.
+server=False
+
