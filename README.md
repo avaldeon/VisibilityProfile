@@ -44,4 +44,4 @@ Este proyecto está licenciado bajo la [GNU General Public License v3.0](LICENSE
 
 ## Contacto
 
-Para más información, puedes contactar a [tu nombre](mailto:tu-email@example.com).
+Para más información, puedes contactar a [Aitor Valdeón](mailto:avaldeon@forestalia.com).
