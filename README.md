@@ -4,25 +4,24 @@
 
 ## Descripción
 
-El **Visibility Profile Plugin** genera imágenes que muestran el perfil del terreno entre dos puntos: el observador y el objetivo, teniendo en cuenta la altura de ambos elementos.
+El plugin **Visibility Profile** genera imágenes que muestran el perfil del terreno entre dos puntos: el observador y el objetivo, teniendo en cuenta la altura de ambos elementos, mostrando así si el objetivo es visible o no.
 
 ## Características
 
-- **Cálculo de Línea de Visión**: El plugin añade líneas de visión directas entre los elementos, así como la línea de visión del terreno en el ángulo más alto.
-- **Visualización del Elemento Observado**: Muestra la proporción del elemento visible observado, utilizando un gráfico que se llena en tres colores.
-  - **Dentro de la Línea de Visión**: Indica si el objeto observado está desplazado.
-  - **Visibilidad Completa**: Si en cada punto se ve el elemento en su totalidad (el terreno es visible).
-  - **Visibilidad Parcial**: Si solo se ve parcialmente.
-  - **No Visible**: Si el objeto no es visible.
+- **Cálculo de Línea de Visión**: El plugin añade líneas de visión directas entre los elementos, así como la línea de visión con el terreno en el ángulo más alto.
+- **Visualización del Elemento Observado**: Muestra la proporción del elemento visible observado, así como la visibilidad del mismo a lo largo de la línea entre los dos puntos (es decir, si acercamos el objetivo al observador desde la ubicación inicial), utilizando un gráfico que se llena en tres colores.
+  - **Visibilidad Completa**: Si en cada punto se ve el elemento en su totalidad (el terreno es visible). Color verde.
+  - **Visibilidad Parcial**: Si solo se ve parcialmente. Color amarillo.
+  - **No Visible**: Si el objeto no es visible (queda totalmente oculto por la topografía). Color rojo.
 
 ## Requisitos
 
-Para utilizar el plugin, necesitas los siguientes capas de origen:
+Para utilizar el plugin, necesitas las siguientes capas de origen:
 
 - **Capa DEM Raster**: Un modelo digital de elevación.
-- **Capa de Puntos**: Debe contener un campo llamado `tipo_punto`, donde:
-  - `0`: representa el observador.
-  - `1`: representa el objetivo.
+- **Capa de Puntos**: Debe contener un campo llamado `tipo_punto` de tipo numérico, donde:
+  - 0: representa el observador.
+  - 1: representa el objetivo.
 
 ## Instalación
 
