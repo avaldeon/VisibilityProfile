@@ -1,6 +1,6 @@
 # Visibility Profile Plugin
 
-![Plugin Logo](./logo.png) 
+![Plugin Logo](https://github.com/avaldeon/VisibilityProfile/blob/main/logo.png) 
 
 ## Descripción
 
