@@ -40,7 +40,7 @@ Si encuentras algún problema, por favor [abre un nuevo issue](https://github.co
 
 ## Licencia
 
-Este proyecto está licenciado bajo la [MIT License](LICENSE).
+Este proyecto está licenciado bajo la [GNU General Public License v3.0](LICENSE).
 
 ## Contacto
 
