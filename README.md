@@ -1,2 +1,45 @@
-The plugin creates images that show the profile of the terrain between two points (the observer and the target) taking into account the height of both elements. In addition, it adds the direct lines of sight between the elements, as well as the line of sight of the highest angle ground, so that the proportion of the visible element observed is displayed. Finally, the graph is filled in 3 colors to indicate within the line of sight, if the observed object is displaced, if at each point the element would be seen in its entirety (the ground is seen), if it is partially seen, or if it is not seen.
-You need as source layers a DEM raster and a point layer with a field "tipo_punto" with 0 if it is the observer or 1 if it is the target
+# Visibility Profile Plugin
+
+![Plugin Logo](./logo.png) 
+
+## Descripción
+
+El **Visibility Profile Plugin** genera imágenes que muestran el perfil del terreno entre dos puntos: el observador y el objetivo, teniendo en cuenta la altura de ambos elementos.
+
+## Características
+
+- **Cálculo de Línea de Visión**: El plugin añade líneas de visión directas entre los elementos, así como la línea de visión del terreno en el ángulo más alto.
+- **Visualización del Elemento Observado**: Muestra la proporción del elemento visible observado, utilizando un gráfico que se llena en tres colores.
+  - **Dentro de la Línea de Visión**: Indica si el objeto observado está desplazado.
+  - **Visibilidad Completa**: Si en cada punto se ve el elemento en su totalidad (el terreno es visible).
+  - **Visibilidad Parcial**: Si solo se ve parcialmente.
+  - **No Visible**: Si el objeto no es visible.
+
+## Requisitos
+
+Para utilizar el plugin, necesitas los siguientes capas de origen:
+
+- **Capa DEM Raster**: Un modelo digital de elevación.
+- **Capa de Puntos**: Debe contener un campo llamado `tipo_punto`, donde:
+  - `0`: representa el observador.
+  - `1`: representa el objetivo.
+
+## Instalación
+
+Instrucciones sobre cómo instalar el plugin.
+
+## Uso
+
+Guía rápida sobre cómo utilizar el plugin.
+
+## Contribuciones
+
+¡Las contribuciones son bienvenidas! Si deseas contribuir, por favor sigue estos pasos...
+
+## Licencia
+
+Este proyecto está licenciado bajo la [MIT License](LICENSE).
+
+## Contacto
+
+Para más información, puedes contactar a [tu nombre](mailto:tu-email@example.com).
