@@ -45,6 +45,7 @@ Este proyecto está licenciado bajo la [GNU General Public License v3.0](LICENSE
 ## Agradecimientos
 
 Este plugin fue desarrollado con la ayuda de varias herramientas, como el plugin **PLugin Builder 3** para la base genérica del plugin, y **ChatGPT** de OpenAI, que proporcionó asistencia en la generación de código y respuestas a preguntas técnicas relacionadas con el desarrollo en QGIS.
+
 L@s compañer@s de Forestalia Renovables, Jorge Abenia y Ester Ramirez, sugirieron la idea de generar en QGIS gráficas de visibildad con el perfil del terreno, y Gonzalo Peño y Nacho Orte, de Cartografía, sugirieron mejoras a los gráficos de salida.
 
 ## Contacto
