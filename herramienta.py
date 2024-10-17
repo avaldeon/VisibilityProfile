@@ -1,7 +1,7 @@
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import (QgsProcessing, QgsProcessingAlgorithm, QgsProcessingParameterFeatureSource, 
                        QgsProcessingParameterRasterLayer, QgsProcessingParameterNumber, 
-                       QgsProcessingParameterFileDestination, QgsPointXY, QgsProcessingParameterString)
+                       QgsProcessingParameterFileDestination, QgsPointXY, QgsProcessingParameterString,QgsProcessingParameterEnum)
 from qgis.core import QgsRaster, QgsRasterLayer, QgsProject, QgsGeometry, QgsFeature
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,13 +40,47 @@ class VisibilityProfileTool(QgsProcessingAlgorithm):
     def initAlgorithm(self,config=None):
         """Definir los parámetros de entrada de la herramienta."""
         
-        # Capa de puntos que contiene el observador y el objetivo
-        self.addParameter(
-            QgsProcessingParameterFeatureSource(
-                self.INPUT_POINTS,
-                'Capa de puntos: Debe tener un campo "tipo_punto" con valor 0 para el observador y valor 1 para el objetivo',
-                [QgsProcessing.TypeVectorPoint]
-            )
+        # Parámetro para el método de selección de puntos
+        self.addParameter(QgsProcessingParameterEnum(
+            'POINT_SELECTION_METHOD', 
+            'Método elegido para la selección de puntos', 
+            options=['Usar capa con ambos puntos', 
+                     'Introducir coordenadas X/Y', 
+                     'Seleccionar capas separadas'],
+            defaultValue=0)
+        )
+
+        # Parámetro para la capa de puntos que ya contiene observador y objetivo
+        self.addParameter(QgsProcessingParameterFeatureSource (
+            'POINTS_LAYER', 
+            'Capa de Puntos de Observador y Objetivo', 
+            [QgsProcessing.TypeVectorPoint], 
+            optional=True)
+        )
+
+        # Parámetro para las coordenadas de observador y objetivo (opción de coordenadas X/Y)
+        self.addParameter(QgsProcessingParameterNumber(
+            'OBSERVER_X', 'Coordenada X del Observador', type=QgsProcessingParameterNumber.Integer, optional=True))
+        self.addParameter(QgsProcessingParameterNumber(
+            'OBSERVER_Y', 'Coordenada Y del Observador', type=QgsProcessingParameterNumber.Integer, optional=True))
+        self.addParameter(QgsProcessingParameterNumber(
+            'TARGET_X', 'Coordenada X del Objetivo', type=QgsProcessingParameterNumber.Integer, optional=True))
+        self.addParameter(QgsProcessingParameterNumber(
+            'TARGET_Y', 'Coordenada Y del Objetivo', type=QgsProcessingParameterNumber.Integer, optional=True))
+
+        # Parámetro para seleccionar capas de puntos (opción de capas separadas)
+        self.addParameter(QgsProcessingParameterFeatureSource(
+            'OBSERVER_LAYER', 
+            'Capa de Puntos de Observador', 
+            [QgsProcessing.TypeVectorPoint], 
+            optional=True)
+        )
+
+        self.addParameter(QgsProcessingParameterFeatureSource(
+            'TARGET_LAYER', 
+            'Capa de Puntos de Objetivo', 
+            [QgsProcessing.TypeVectorPoint], 
+            optional=True)
         )
         
         # Capa de raster (MDT)
@@ -85,7 +119,6 @@ class VisibilityProfileTool(QgsProcessingAlgorithm):
                 fileFilter='PNG (*.png)'
             )
         )
-		
         # Parámetro para el título del gráfico
         self.addParameter(QgsProcessingParameterString('GRAPH_TITLE', 'Título del Gráfico', defaultValue='Perfil Topográfico y Visibilidad'))
 
@@ -99,7 +132,29 @@ class VisibilityProfileTool(QgsProcessingAlgorithm):
         """Este es el método principal que se ejecuta cuando se llama a la herramienta."""
         
         # Obtener los parámetros de entrada
-        points_layer = self.parameterAsSource(parameters, self.INPUT_POINTS, context)
+        selection_method = self.parameterAsEnum(parameters, 'POINT_SELECTION_METHOD', context)
+
+        if selection_method == 0:  # Opción 1: Usar capa con ambos puntos
+            points_layer = self.parameterAsVectorLayer(parameters, 'POINTS_LAYER', context)
+            observer_point, target_point = self.get_points_from_layer(points_layer)
+
+        elif selection_method == 1:  # Opción 3: Introducir coordenadas X/Y
+            observer_x = self.parameterAsDouble(parameters, 'OBSERVER_X', context)
+            observer_y = self.parameterAsDouble(parameters, 'OBSERVER_Y', context)
+            target_x = self.parameterAsDouble(parameters, 'TARGET_X', context)
+            target_y = self.parameterAsDouble(parameters, 'TARGET_Y', context)
+        
+            observer_point = QgsPointXY(observer_x, observer_y)
+            target_point = QgsPointXY(target_x, target_y)
+
+        elif selection_method == 2:  # Opción 4: Seleccionar capas separadas
+            observer_layer = self.parameterAsVectorLayer(parameters, 'OBSERVER_LAYER', context)
+            target_layer = self.parameterAsVectorLayer(parameters, 'TARGET_LAYER', context)
+        
+            observer_point = self.get_point_from_layer(observer_layer)
+            target_point = self.get_point_from_layer(target_layer)
+
+		#points_layer = self.parameterAsSource(parameters, self.INPUT_POINTS, context)
         mdt_layer = self.parameterAsRasterLayer(parameters, self.INPUT_RASTER, context)
         observer_height = self.parameterAsDouble(parameters, self.OBSERVER_HEIGHT, context)
         target_height = self.parameterAsDouble(parameters, self.TARGET_HEIGHT, context)
@@ -109,18 +164,37 @@ class VisibilityProfileTool(QgsProcessingAlgorithm):
         y_label = self.parameterAsString(parameters, self.Y_LABEL, context)
         
         # Obtener los puntos del observador y del objetivo
-        observer_point, target_point = self.get_points_from_layer(points_layer)
+        #observer_point, target_point = self.get_points_from_layer(points_layer)
         
         # Generar el perfil topográfico y visibilidad
         self.generate_profile(mdt_layer, observer_point, observer_height, target_point, target_height, output_file, graph_title, x_label, y_label)
         
         return {self.OUTPUT_FILE: output_file}
 
+    def get_point_from_layer(self, point_layer):
+        """Obtiene los puntos del observador y del objetivo desde la capa de puntos."""
+
+        point = None
+        
+        # Iteramos sobre las entidades de la capa
+        for feature in point_layer.getFeatures():
+            geom = feature.geometry()
+            point = geom.asPoint()  # Extraer el punto
+
+        if point:
+            return QgsPointXY(point)
+        else:
+            raise ValueError("Faltan puntos de observador u objetivo en la capa de puntos.")
+
     def get_points_from_layer(self, points_layer):
         """Obtiene los puntos del observador y del objetivo desde la capa de puntos."""
+
         observer_point = None
         target_point = None
-
+        #Comprobamos que la capa tenga 2 puntos
+        if len(points_layer) != 2:
+            feedback.reportError('La capa debe contener al menos dos puntos.')
+            raise QgsProcessingException('La capa contiene menos de dos puntos.')
         # Iteramos sobre las entidades de la capa
         for feature in points_layer.getFeatures():
             geom = feature.geometry()
@@ -257,4 +331,4 @@ class VisibilityProfileTool(QgsProcessingAlgorithm):
         # Guardar el gráfico en el archivo especificado
         plt.savefig(output_file)
         plt.close()
-
+		
