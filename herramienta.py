@@ -228,9 +228,6 @@ class VisibilityProfileTool(QgsProcessingAlgorithm):
         
         # Calcular la posición de distancia correspondiente al punto más alto
         max_distance = distances[max_index]
- 
-        # Calcular el ángulo máximo de visión (en radianes)
-        max_angle = np.arctan2(max_elevation - (elevations[0] + observer_height), max_distance)
 
         # Dibujar la línea de visión máxima extendida hasta el objetivo (gris oscuro)
         extended_max_elevation = elevations[0] + observer_height + np.tan(max_angle) * total_distance
