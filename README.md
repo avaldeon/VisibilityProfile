@@ -4,7 +4,7 @@
 
 ## Descripción
 
-El plugin **Visibility Profile** genera imágenes que muestran el perfil del terreno entre dos puntos: el observador y el objetivo, teniendo en cuenta la altura de ambos elementos, mostrando así si el objetivo es visible o no.
+El plugin **Visibility Profile** genera imágenes que muestran el perfil del terreno entre dos puntos: el observador y el objetivo, teniendo en cuenta la altura de ambos elementos, mostrando así si el objetivo es visible o no, así como la fraccción visible del mismo, de haberla.
 
 ## Características
 
