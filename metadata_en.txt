@@ -1,0 +1,11 @@
+
+[general]
+
+description=This plugin make images with a graph drawing the terrain profile between two points and the visibility between them taking into account their height.
+
+about=The plugin creates images that show the profile of the terrain between two points (the observer and the target) taking into account the height of both elements. In addition, it adds the direct lines of sight between the elements, as well as the line of sight of the highest angle between the observer and the terrain, so that the visible proportion of the target is shown. Finally, the graph can be filled with 3 colors to indicate within the line of sight, if the target element were moved along it, if at each of the points the element would be completely seen (the ground where it would rest is visible), if it is partially seen (the ground where it rests would not be seen, but part of the object is visible), or if no part of the object is seen. A digital terrain model (DTM) or a digital elevation model (DEM) in a metric coordinate system (UTM) is required as input data, and observation points can be entered manually using their UTM coordinates, or via a points layer with the observer's point and another point layer with the target's point.
+
+tags=python, visibility, profile, qgis, environmental impact, environment
+
+
+

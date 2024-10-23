@@ -1,26 +1,8 @@
 
 [general]
-name=Visibility Profile
-qgisMinimumVersion=3.0
+
 description=El plugin Visibility Profile genera imágenes que muestran el perfil del terreno entre dos puntos y la visibilidad entre ambos teniendo en cuenta la altura de los mismos.
-version=1.0
-author=Aitor Valdeón - Forestalia Renovables S.L.
-email=avaldeon@forestalia.com
 
 about=El plugin crea imágenes que muestran el perfil del terreno entre dos puntos (el observador y lo observado) teniendo en cuenta la altura de ambos elementos. Además, agrega las líneas de visión directas entre los elementos, así como la línea de visión del ángulo más alto del terreno, de modo que se muestra la proporción del elemento visible observado. Finalmente, el gráfico se puede rellenar con 3 colores para indicar dentro de la línea de visión, si se desplazara el elemento objetivo a lo largo de la misma, si en cada uno de los puntos el elemento se vería en su totalidad (ya que se ve el suelo donde se apoyaría), si se ve parcialmente (no se vería el suelo donde apoya pero sí parte del objeto), o si no se ve nada del objeto. Como datos de entrada se requiere un modelo digital del terreno (MDT) o un modelo digital de elevaciones (MDS) en un sistema de coordenadas métrico (UTM), y los puntos de observación pueden ingresarse manualmente mediante sus coordenadas UTM, o mediante una capa de puntos con el punto del observador y otra capa de puntos con el punto del objetivo.
 
-tracker=https://github.com/avaldeon/VisibilityProfile/issues
-repository=https://github.com/avaldeon/VisibilityProfile
-
 tags=python, visibilidad, perfil, qgis, eia, impacto ambiental, medio ambiente
-
-homepage=https://github.com/avaldeon/VisibilityProfile
-category=Plugins
-icon=logo.png
-
-experimental=True
-
-# deprecated flag (applies to the whole plugin, not just a single version)
-deprecated=False
-
-translations=es;en
