@@ -24,7 +24,8 @@
 
 import os
 
-from qgis.PyQt import uic
+# from qgis.PyQt import uic # Anterior
+from PyQt5 import uic
 from qgis.PyQt import QtWidgets
 from PyQt5.QtWidgets import QDialog, QComboBox, QToolButton, QFileDialog, QApplication, QMessageBox
 from PyQt5.QtCore import Qt
@@ -32,17 +33,21 @@ from qgis.core import QgsRaster, QgsRasterLayer, QgsProject, QgsGeometry, QgsFea
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'visibility_profile_dialog_base.ui'))
 
 
-class VisibilityProfileDialog(QtWidgets.QDialog, FORM_CLASS):
+
+class VisibilityProfileDialog(QDialog, FORM_CLASS):
     def __init__(self, parent=None):
         """Constructor."""
         super(VisibilityProfileDialog, self).__init__(parent)
+
         # Cargar interfaz de usuario
-        self.setupUi(self)
+        self.setupUi(self)        
+
         self.buttonsWidget.setMaximumHeight(60)	
         self.buttonsWidget.setMinimumHeight(60)	
         self.outputFileWidget.setMaximumHeight(130)	
@@ -57,6 +62,8 @@ class VisibilityProfileDialog(QtWidgets.QDialog, FORM_CLASS):
         self.coordinatesWidget.setMinimumHeight(90)
         self.optionsWidget.setMaximumHeight(120)	
         self.optionsWidget.setMinimumHeight(120)
+
+
         # Variables
         self.capa_raster_seleccionada = None
         self.capa_observador = None
@@ -93,11 +100,13 @@ class VisibilityProfileDialog(QtWidgets.QDialog, FORM_CLASS):
         self.checkBoxPuntosLeyenda.stateChanged.connect(self.cambio_estado_checkBoxPuntosLeyenda)
         self.checkBoxRellenoGrafico.stateChanged.connect(self.cambio_estado_checkBoxRellenoGrafico)
         self.checkBoxRojoVisible.stateChanged.connect(self.cambio_estado_checkBoxRojoVisible)
+
         # Conectar el QPushButton "Cerrar" al método cerrar toda la aplicación
         self.closePushButton.clicked.connect(self.close)
         # Conectar el QPushButton "Ejecutar" al método que ejecuta la herramienta
         self.runPushButton.clicked.connect(self.generate_profile)
 
+		
     def cambio_estado_checkBoxRojoVisible(self, estado):
         if estado == Qt.Checked:
             self.color_visible = 'red'
@@ -293,6 +302,9 @@ class VisibilityProfileDialog(QtWidgets.QDialog, FORM_CLASS):
     def get_point_from_layer(self, point_layer):
         """Obtiene los puntos del observador y del objetivo desde la capa de puntos."""
         point = None
+        if point_layer==None:
+            QMessageBox.warning(self, "Datos necesarios faltantes", "Por favor, seleccione las capas de puntos de observador y objetivo.")
+            return None
         # Iteramos sobre las entidades de la capa
         for feature in point_layer.getFeatures():
             geom = feature.geometry()
